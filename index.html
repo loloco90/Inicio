@@ -1,28 +1,31 @@
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jogo Pong</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js"></script>
-    <script src="script.js"></script>
+    <script src="script.js" defer></script>
     <style>
         body {
+            margin: 0;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            margin: 0;
             background-color: #333;
             color: white;
+            height: 100vh;
         }
-        canvas {
-            display: block;
-            margin: 20px auto;
+        h1 {
+            text-align: center;
         }
         .controls {
             display: flex;
             flex-direction: column;
             gap: 10px;
+            margin-top: 20px;
         }
         .btn {
             background-color: green;
@@ -34,10 +37,8 @@
             cursor: pointer;
         }
     </style>
-    <title>Jogo Pong</title>
 </head>
 <body>
-    <header>JOGO PONG</header>
     <h1>Jogo desenvolvido no colégio Chiarelli</h1>
     <p>#jogo-pong</p>
     
@@ -46,93 +47,5 @@
         <button class="btn" id="upButton">Cima</button>
         <button class="btn" id="downButton">Baixo</button>
     </div>
-
-    <script>
-        // Variáveis da bolinha
-        let xBolinha, yBolinha, diametro = 20, raio = diametro / 2;
-        let velXBolinha = 5, velYBolinha = 5;
-
-        // Variáveis das raquetes
-        let raqueteComprimento = 10, raqueteAltura = 100;
-        let xRaquete, yRaquete, velRaquete = 10;
-        let xRaqueteOponente, yRaqueteOponente, velOponente = 5;
-
-        function setup() {
-            createCanvas(windowWidth * 0.8, windowHeight * 0.6);
-            xBolinha = width / 2;
-            yBolinha = height / 2;
-            xRaquete = 10;
-            yRaquete = height / 2 - raqueteAltura / 2;
-            xRaqueteOponente = width - raqueteComprimento - 10;
-            yRaqueteOponente = height / 2 - raqueteAltura / 2;
-
-            // Controle de toque ou clique para celular e PC
-            document.getElementById('upButton').addEventListener('click', () => moveUp());
-            document.getElementById('downButton').addEventListener('click', () => moveDown());
-        }
-
-        function draw() {
-            background(0);
-            desenhaBolinha();
-            movimentaBolinha();
-            verificaColisaoBorda();
-
-            desenhaRaquete(xRaquete, yRaquete);
-            desenhaRaquete(xRaqueteOponente, yRaqueteOponente);
-
-            movimentaRaqueteOponente();
-            verificaColisaoRaquete(xRaquete, yRaquete);
-            verificaColisaoRaquete(xRaqueteOponente, yRaqueteOponente);
-        }
-
-        function desenhaBolinha() {
-            circle(xBolinha, yBolinha, diametro);
-        }
-
-        function movimentaBolinha() {
-            xBolinha += velXBolinha;
-            yBolinha += velYBolinha;
-        }
-
-        function verificaColisaoBorda() {
-            if (xBolinha + raio > width || xBolinha - raio < 0) velXBolinha *= -1;
-            if (yBolinha + raio > height || yBolinha - raio < 0) velYBolinha *= -1;
-        }
-
-        function desenhaRaquete(x, y) {
-            rect(x, y, raqueteComprimento, raqueteAltura);
-        }
-
-        function movimentaRaqueteOponente() {
-            if (yBolinha > yRaqueteOponente + raqueteAltura / 2) yRaqueteOponente += velOponente;
-            if (yBolinha < yRaqueteOponente + raqueteAltura / 2) yRaqueteOponente -= velOponente;
-        }
-
-        function verificaColisaoRaquete(x, y) {
-            if (
-                xBolinha - raio < x + raqueteComprimento &&
-                xBolinha + raio > x &&
-                yBolinha + raio > y &&
-                yBolinha - raio < y + raqueteAltura
-            ) {
-                velXBolinha *= -1;
-            }
-        }
-
-        // Funções para mover a raquete do jogador
-        function moveUp() {
-            yRaquete -= velRaquete;
-            if (yRaquete < 0) yRaquete = 0;
-        }
-
-        function moveDown() {
-            yRaquete += velRaquete;
-            if (yRaquete + raqueteAltura > height) yRaquete = height - raqueteAltura;
-        }
-
-        function windowResized() {
-            resizeCanvas(windowWidth * 0.8, windowHeight * 0.6);
-        }
-    </script>
 </body>
 </html>
