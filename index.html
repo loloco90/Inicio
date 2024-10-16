@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js"></script>
+    <script src="script.js"></script>
+    <title>Jogo Pong</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #222;
+            color: white;
+        }
+        canvas {
+            display: block;
+        }
+        .controls {
+            display: flex;
+            justify-content: center;
+            margin-top: 10px;
+        }
+        .button {
+            background-color: #4CAF50;
+            border: none;
+            color: white;
+            padding: 15px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <header>JOGO PONG</header>
+
+    <div>
+        <h1>Jogo desenvolvido no colégio Chiarelli</h1>
+        <p>#jogo-pong</p>
+    </div>
+
+    <div class="controls">
+        <button class="button" id="upBtn">Cima</button>
+        <button class="button" id="downBtn">Baixo</button>
+    </div>
+
+</body>
+</html>
