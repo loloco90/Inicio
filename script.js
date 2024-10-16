@@ -1,17 +1,28 @@
 // Variáveis da bolinha
-let xBolinha = 300, yBolinha = 200, diametro = 20, raio = diametro / 2;
+let xBolinha, yBolinha, diametro = 20, raio = diametro / 2;
 let velXBolinha = 5, velYBolinha = 5;
 
 // Variáveis das raquetes
 let raqueteComprimento = 10, raqueteAltura = 100;
-let xRaquete = 10, yRaquete = 150, velRaquete = 10;
-let xRaqueteOponente = 510, yRaqueteOponente = 150, velOponente = 5;
+let xRaquete = 10, yRaquete, velRaquete = 10;
+let xRaqueteOponente, yRaqueteOponente, velOponente = 5;
 
 let upPressed = false;
 let downPressed = false;
 
 function setup() {
-  createCanvas(520, 400);
+  // Adaptação para diferentes telas
+  let canvasWidth = windowWidth > 600 ? 520 : windowWidth * 0.9;
+  let canvasHeight = windowHeight > 600 ? 400 : windowHeight * 0.6;
+
+  createCanvas(canvasWidth, canvasHeight);
+
+  // Iniciar posições da bolinha e raquetes
+  xBolinha = width / 2;
+  yBolinha = height / 2;
+  yRaquete = height / 2 - raqueteAltura / 2;
+  xRaqueteOponente = width - 20;
+  yRaqueteOponente = height / 2 - raqueteAltura / 2;
 }
 
 function draw() {
@@ -90,13 +101,15 @@ document.getElementById('downBtn').addEventListener('mouseup', () => {
 });
 
 // Suporte para dispositivos móveis (touch)
-document.getElementById('upBtn').addEventListener('touchstart', () => {
+document.getElementById('upBtn').addEventListener('touchstart', (e) => {
+  e.preventDefault(); // Prevenir comportamento de toque padrão
   upPressed = true;
 });
 document.getElementById('upBtn').addEventListener('touchend', () => {
   upPressed = false;
 });
-document.getElementById('downBtn').addEventListener('touchstart', () => {
+document.getElementById('downBtn').addEventListener('touchstart', (e) => {
+  e.preventDefault();
   downPressed = true;
 });
 document.getElementById('downBtn').addEventListener('touchend', () => {
