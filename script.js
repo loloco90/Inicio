@@ -1,28 +1,18 @@
 // Variáveis da bolinha
-let xBolinha, yBolinha, diametro = 20, raio = diametro / 2;
+let xBolinha = 300, yBolinha = 200, diametro = 20, raio = diametro / 2;
 let velXBolinha = 5, velYBolinha = 5;
 
 // Variáveis das raquetes
 let raqueteComprimento = 10, raqueteAltura = 100;
-let xRaquete = 10, yRaquete, velRaquete = 10;
-let xRaqueteOponente, yRaqueteOponente, velOponente = 5;
+let xRaquete = 10, yRaquete = 150, velRaquete = 10;
+let xRaqueteOponente = 510, yRaqueteOponente = 150, velOponente = 5;
 
-let upPressed = false;
-let downPressed = false;
+// Estados de controle
+let moveUp = false;
+let moveDown = false;
 
 function setup() {
-  // Adaptação para diferentes telas
-  let canvasWidth = windowWidth > 600 ? 520 : windowWidth * 0.9;
-  let canvasHeight = windowHeight > 600 ? 400 : windowHeight * 0.6;
-
-  createCanvas(canvasWidth, canvasHeight);
-
-  // Iniciar posições da bolinha e raquetes
-  xBolinha = width / 2;
-  yBolinha = height / 2;
-  yRaquete = height / 2 - raqueteAltura / 2;
-  xRaqueteOponente = width - 20;
-  yRaqueteOponente = height / 2 - raqueteAltura / 2;
+  createCanvas(windowWidth * 0.6, windowHeight * 0.6);
 }
 
 function draw() {
@@ -30,13 +20,13 @@ function draw() {
   desenhaBolinha();
   movimentaBolinha();
   verificaColisaoBorda();
-
+  
   desenhaRaquete(xRaquete, yRaquete);
   desenhaRaquete(xRaqueteOponente, yRaqueteOponente);
-
+  
   movimentaMinhaRaquete();
   movimentaRaqueteOponente();
-
+  
   verificaColisaoRaquete(xRaquete, yRaquete);
   verificaColisaoRaquete(xRaqueteOponente, yRaqueteOponente);
 }
@@ -60,10 +50,10 @@ function desenhaRaquete(x, y) {
 }
 
 function movimentaMinhaRaquete() {
-  if (keyIsDown(UP_ARROW) || upPressed) yRaquete -= velRaquete;
-  if (keyIsDown(DOWN_ARROW) || downPressed) yRaquete += velRaquete;
+  if (moveUp) yRaquete -= velRaquete;
+  if (moveDown) yRaquete += velRaquete;
 
-  // Evitar que a raquete saia da tela
+  // Limites da raquete
   yRaquete = constrain(yRaquete, 0, height - raqueteAltura);
 }
 
@@ -71,7 +61,7 @@ function movimentaRaqueteOponente() {
   if (yBolinha > yRaqueteOponente + raqueteAltura / 2) yRaqueteOponente += velOponente;
   if (yBolinha < yRaqueteOponente + raqueteAltura / 2) yRaqueteOponente -= velOponente;
 
-  // Evitar que a raquete do oponente saia da tela
+  // Limites da raquete oponente
   yRaqueteOponente = constrain(yRaqueteOponente, 0, height - raqueteAltura);
 }
 
@@ -86,32 +76,17 @@ function verificaColisaoRaquete(x, y) {
   }
 }
 
-// Funções para detectar quando os botões são pressionados
-document.getElementById('upBtn').addEventListener('mousedown', () => {
-  upPressed = true;
-});
-document.getElementById('upBtn').addEventListener('mouseup', () => {
-  upPressed = false;
-});
-document.getElementById('downBtn').addEventListener('mousedown', () => {
-  downPressed = true;
-});
-document.getElementById('downBtn').addEventListener('mouseup', () => {
-  downPressed = false;
-});
+// Lógica dos botões
+const btnUp = document.getElementById('btnUp');
+const btnDown = document.getElementById('btnDown');
 
-// Suporte para dispositivos móveis (touch)
-document.getElementById('upBtn').addEventListener('touchstart', (e) => {
-  e.preventDefault(); // Prevenir comportamento de toque padrão
-  upPressed = true;
-});
-document.getElementById('upBtn').addEventListener('touchend', () => {
-  upPressed = false;
-});
-document.getElementById('downBtn').addEventListener('touchstart', (e) => {
-  e.preventDefault();
-  downPressed = true;
-});
-document.getElementById('downBtn').addEventListener('touchend', () => {
-  downPressed = false;
-});
+btnUp.addEventListener('mousedown', () => moveUp = true);
+btnUp.addEventListener('mouseup', () => moveUp = false);
+btnDown.addEventListener('mousedown', () => moveDown = true);
+btnDown.addEventListener('mouseup', () => moveDown = false);
+
+// Também tratar o touch para mobile
+btnUp.addEventListener('touchstart', () => moveUp = true);
+btnUp.addEventListener('touchend', () => moveUp = false);
+btnDown.addEventListener('touchstart', () => moveDown = true);
+btnDown.addEventListener('touchend', () => moveDown = false);
