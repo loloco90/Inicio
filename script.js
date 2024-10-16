@@ -5,10 +5,10 @@ let velXBolinha = 5, velYBolinha = 5;
 // Variáveis das raquetes
 let raqueteComprimento = 10, raqueteAltura = 100;
 let xRaquete = 10, yRaquete = 150, velRaquete = 10;
-let xRaqueteOponente = 580, yRaqueteOponente = 150, velOponente = 5;
+let xRaqueteOponente = 420, yRaqueteOponente = 150, velOponente = 5;
 
 function setup() {
-  createCanvas(480, 320);
+  createCanvas(520, 420);
 }
 
 function draw() {
