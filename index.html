@@ -19,11 +19,12 @@
         }
         canvas {
             display: block;
+            margin-bottom: 20px;
         }
         .controls {
             display: flex;
-            justify-content: center;
-            margin-top: 10px;
+            flex-direction: column;
+            align-items: center;
         }
         .button {
             background-color: #4CAF50;
@@ -36,6 +37,7 @@
             font-size: 16px;
             margin: 4px;
             cursor: pointer;
+            width: 100px;
         }
     </style>
 </head>
@@ -46,6 +48,9 @@
         <h1>Jogo desenvolvido no colégio Chiarelli</h1>
         <p>#jogo-pong</p>
     </div>
+
+    <!-- Adiciona um container para o canvas -->
+    <div id="gameContainer"></div>
 
     <div class="controls">
         <button class="button" id="upBtn">Cima</button>

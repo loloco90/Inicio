@@ -11,8 +11,8 @@ let upPressed = false, downPressed = false;
 
 function setup() {
   // Ajusta o canvas para 100% da largura da tela
-  let canvas = createCanvas(windowWidth * 0.8, windowHeight * 0.8);
-  canvas.parent('gameContainer');
+  let canvas = createCanvas(windowWidth * 0.8, windowHeight * 0.6);
+  canvas.parent('gameContainer');  // Insere o canvas no div 'gameContainer'
 }
 
 function draw() {
