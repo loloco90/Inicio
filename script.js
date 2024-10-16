@@ -8,7 +8,7 @@ let xRaquete = 10, yRaquete = 150, velRaquete = 10;
 let xRaqueteOponente = 580, yRaqueteOponente = 150, velOponente = 5;
 
 function setup() {
-  createCanvas(600, 400);
+  createCanvas(480, 320);
 }
 
 function draw() {
