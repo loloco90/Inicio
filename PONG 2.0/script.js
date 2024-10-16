@@ -3,12 +3,16 @@ let xBolinha = 300, yBolinha = 200, diametro = 20, raio = diametro / 2;
 let velXBolinha = 5, velYBolinha = 5;
 
 // Variáveis das raquetes
-let raqueteComprimento = 4, raqueteAltura = 100;
+let raqueteComprimento = 10, raqueteAltura = 100;
 let xRaquete = 10, yRaquete = 150, velRaquete = 10;
 let xRaqueteOponente = 510, yRaqueteOponente = 150, velOponente = 5;
 
+// Estados de controle
+let moveUp = false;
+let moveDown = false;
+
 function setup() {
-  createCanvas(520, 520);
+  createCanvas(windowWidth * 0.6, windowHeight * 0.6);
 }
 
 function draw() {
@@ -46,13 +50,19 @@ function desenhaRaquete(x, y) {
 }
 
 function movimentaMinhaRaquete() {
-  if (keyIsDown(UP_ARROW)) yRaquete -= velRaquete;
-  if (keyIsDown(DOWN_ARROW)) yRaquete += velRaquete;
+  if (moveUp) yRaquete -= velRaquete;
+  if (moveDown) yRaquete += velRaquete;
+
+  // Limites da raquete
+  yRaquete = constrain(yRaquete, 0, height - raqueteAltura);
 }
 
 function movimentaRaqueteOponente() {
   if (yBolinha > yRaqueteOponente + raqueteAltura / 2) yRaqueteOponente += velOponente;
   if (yBolinha < yRaqueteOponente + raqueteAltura / 2) yRaqueteOponente -= velOponente;
+
+  // Limites da raquete oponente
+  yRaqueteOponente = constrain(yRaqueteOponente, 0, height - raqueteAltura);
 }
 
 function verificaColisaoRaquete(x, y) {
@@ -65,3 +75,18 @@ function verificaColisaoRaquete(x, y) {
     velXBolinha *= -1;
   }
 }
+
+// Lógica dos botões
+const btnUp = document.getElementById('btnUp');
+const btnDown = document.getElementById('btnDown');
+
+btnUp.addEventListener('mousedown', () => moveUp = true);
+btnUp.addEventListener('mouseup', () => moveUp = false);
+btnDown.addEventListener('mousedown', () => moveDown = true);
+btnDown.addEventListener('mouseup', () => moveDown = false);
+
+// Também tratar o touch para mobile
+btnUp.addEventListener('touchstart', () => moveUp = true);
+btnUp.addEventListener('touchend', () => moveUp = false);
+btnDown.addEventListener('touchstart', () => moveDown = true);
+btnDown.addEventListener('touchend', () => moveDown = false);
