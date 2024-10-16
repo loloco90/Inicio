@@ -1,94 +1,104 @@
 // Variáveis da bolinha
-let xBolinha, yBolinha, diametro = 20, raio = diametro / 2;
+let xBolinha = 300, yBolinha = 200, diametro = 20, raio = diametro / 2;
 let velXBolinha = 5, velYBolinha = 5;
 
 // Variáveis das raquetes
 let raqueteComprimento = 10, raqueteAltura = 100;
-let xRaquete, yRaquete, velRaquete = 10;
-let xRaqueteOponente, yRaqueteOponente, velOponente = 5;
+let xRaquete = 10, yRaquete = 150, velRaquete = 10;
+let xRaqueteOponente = 510, yRaqueteOponente = 150, velOponente = 5;
+
+let upPressed = false;
+let downPressed = false;
 
 function setup() {
-    // Configuração do canvas com 80% da largura da tela e 60% da altura
-    createCanvas(windowWidth * 0.8, windowHeight * 0.6);
-    xBolinha = width / 2;
-    yBolinha = height / 2;
-    xRaquete = 10;
-    yRaquete = height / 2 - raqueteAltura / 2;
-    xRaqueteOponente = width - raqueteComprimento - 10;
-    yRaqueteOponente = height / 2 - raqueteAltura / 2;
-
-    // Controle de clique para os botões de movimentação
-    document.getElementById('upButton').addEventListener('click', moveUp);
-    document.getElementById('downButton').addEventListener('click', moveDown);
+  createCanvas(520, 400);
 }
 
 function draw() {
-    background(0);
-    desenhaBolinha();
-    movimentaBolinha();
-    verificaColisaoBorda();
+  background(0);
+  desenhaBolinha();
+  movimentaBolinha();
+  verificaColisaoBorda();
 
-    desenhaRaquete(xRaquete, yRaquete);
-    desenhaRaquete(xRaqueteOponente, yRaqueteOponente);
+  desenhaRaquete(xRaquete, yRaquete);
+  desenhaRaquete(xRaqueteOponente, yRaqueteOponente);
 
-    movimentaRaqueteOponente();
-    verificaColisaoRaquete(xRaquete, yRaquete);
-    verificaColisaoRaquete(xRaqueteOponente, yRaqueteOponente);
+  movimentaMinhaRaquete();
+  movimentaRaqueteOponente();
+
+  verificaColisaoRaquete(xRaquete, yRaquete);
+  verificaColisaoRaquete(xRaqueteOponente, yRaqueteOponente);
 }
 
 function desenhaBolinha() {
-    circle(xBolinha, yBolinha, diametro);
+  circle(xBolinha, yBolinha, diametro);
 }
 
 function movimentaBolinha() {
-    xBolinha += velXBolinha;
-    yBolinha += velYBolinha;
+  xBolinha += velXBolinha;
+  yBolinha += velYBolinha;
 }
 
 function verificaColisaoBorda() {
-    if (xBolinha + raio > width || xBolinha - raio < 0) {
-        velXBolinha *= -1;
-    }
-    if (yBolinha + raio > height || yBolinha - raio < 0) {
-        velYBolinha *= -1;
-    }
+  if (xBolinha + raio > width || xBolinha - raio < 0) velXBolinha *= -1;
+  if (yBolinha + raio > height || yBolinha - raio < 0) velYBolinha *= -1;
 }
 
 function desenhaRaquete(x, y) {
-    rect(x, y, raqueteComprimento, raqueteAltura);
+  rect(x, y, raqueteComprimento, raqueteAltura);
+}
+
+function movimentaMinhaRaquete() {
+  if (keyIsDown(UP_ARROW) || upPressed) yRaquete -= velRaquete;
+  if (keyIsDown(DOWN_ARROW) || downPressed) yRaquete += velRaquete;
+
+  // Evitar que a raquete saia da tela
+  yRaquete = constrain(yRaquete, 0, height - raqueteAltura);
 }
 
 function movimentaRaqueteOponente() {
-    if (yBolinha > yRaqueteOponente + raqueteAltura / 2) {
-        yRaqueteOponente += velOponente;
-    }
-    if (yBolinha < yRaqueteOponente + raqueteAltura / 2) {
-        yRaqueteOponente -= velOponente;
-    }
+  if (yBolinha > yRaqueteOponente + raqueteAltura / 2) yRaqueteOponente += velOponente;
+  if (yBolinha < yRaqueteOponente + raqueteAltura / 2) yRaqueteOponente -= velOponente;
+
+  // Evitar que a raquete do oponente saia da tela
+  yRaqueteOponente = constrain(yRaqueteOponente, 0, height - raqueteAltura);
 }
 
 function verificaColisaoRaquete(x, y) {
-    if (xBolinha - raio < x + raqueteComprimento && xBolinha + raio > x &&
-        yBolinha + raio > y && yBolinha - raio < y + raqueteAltura) {
-        velXBolinha *= -1;
-    }
+  if (
+    xBolinha - raio < x + raqueteComprimento &&
+    xBolinha + raio > x &&
+    yBolinha + raio > y &&
+    yBolinha - raio < y + raqueteAltura
+  ) {
+    velXBolinha *= -1;
+  }
 }
 
-// Funções para mover a raquete do jogador
-function moveUp() {
-    yRaquete -= velRaquete;
-    if (yRaquete < 0) {
-        yRaquete = 0;
-    }
-}
+// Funções para detectar quando os botões são pressionados
+document.getElementById('upBtn').addEventListener('mousedown', () => {
+  upPressed = true;
+});
+document.getElementById('upBtn').addEventListener('mouseup', () => {
+  upPressed = false;
+});
+document.getElementById('downBtn').addEventListener('mousedown', () => {
+  downPressed = true;
+});
+document.getElementById('downBtn').addEventListener('mouseup', () => {
+  downPressed = false;
+});
 
-function moveDown() {
-    yRaquete += velRaquete;
-    if (yRaquete + raqueteAltura > height) {
-        yRaquete = height - raqueteAltura;
-    }
-}
-
-function windowResized() {
-    resizeCanvas(windowWidth * 0.8, windowHeight * 0.6);
-}
+// Suporte para dispositivos móveis (touch)
+document.getElementById('upBtn').addEventListener('touchstart', () => {
+  upPressed = true;
+});
+document.getElementById('upBtn').addEventListener('touchend', () => {
+  upPressed = false;
+});
+document.getElementById('downBtn').addEventListener('touchstart', () => {
+  downPressed = true;
+});
+document.getElementById('downBtn').addEventListener('touchend', () => {
+  downPressed = false;
+});

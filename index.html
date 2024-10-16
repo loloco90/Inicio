@@ -1,51 +1,57 @@
-
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jogo Pong</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js"></script>
-    <script src="script.js" defer></script>
+    <script src="script.js"></script>
+    <title>Jogo Pong</title>
     <style>
         body {
-            margin: 0;
             display: flex;
             flex-direction: column;
-            justify-content: center;
             align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
             background-color: #333;
             color: white;
-            height: 100vh;
         }
-        h1 {
+
+        header, h1, p {
             text-align: center;
         }
+
+        canvas {
+            display: block;
+        }
+
         .controls {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
             margin-top: 20px;
         }
-        .btn {
+
+        .controls button {
             background-color: green;
             color: white;
-            padding: 10px 20px;
+            padding: 15px;
+            margin: 10px;
             border: none;
-            border-radius: 5px;
-            font-size: 18px;
             cursor: pointer;
+            font-size: 18px;
+        }
+
+        .controls button:active {
+            background-color: darkgreen;
         }
     </style>
 </head>
 <body>
+    <header>JOGO PONG</header>
     <h1>Jogo desenvolvido no colégio Chiarelli</h1>
     <p>#jogo-pong</p>
-    
-    <!-- Botões para controle da raquete -->
     <div class="controls">
-        <button class="btn" id="upButton">Cima</button>
-        <button class="btn" id="downButton">Baixo</button>
+        <button id="upBtn">Cima</button><br>
+        <button id="downBtn">Baixo</button>
     </div>
 </body>
 </html>
