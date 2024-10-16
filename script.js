@@ -10,8 +10,8 @@ let xRaqueteOponente = 510, yRaqueteOponente = 150, velOponente = 5;
 let upPressed = false, downPressed = false;
 
 function setup() {
-  // Ajusta o canvas para 100% da largura da tela
-  let canvas = createCanvas(windowWidth * 0.8, windowHeight * 0.6);
+    createCanvas(520, 520);
+
   canvas.parent('gameContainer');  // Insere o canvas no div 'gameContainer'
 }
 
