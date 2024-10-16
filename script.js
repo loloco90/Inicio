@@ -3,12 +3,12 @@ let xBolinha = 300, yBolinha = 200, diametro = 20, raio = diametro / 2;
 let velXBolinha = 5, velYBolinha = 5;
 
 // Variáveis das raquetes
-let raqueteComprimento = 10, raqueteAltura = 100;
+let raqueteComprimento = 4, raqueteAltura = 100;
 let xRaquete = 10, yRaquete = 150, velRaquete = 10;
 let xRaqueteOponente = 510, yRaqueteOponente = 150, velOponente = 5;
 
 function setup() {
-  createCanvas(520, 420);
+  createCanvas(520, 520);
 }
 
 function draw() {
